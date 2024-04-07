@@ -88,3 +88,15 @@ const products = [
 		category: 'Cupcake',
 	},
 ];
+
+// Render Products to DOM
+products.forEach(({ name, id, price, category }) => {
+	dessertCards.innerHTML += `
+		<div class="dessert-card">
+			<h2>${name}</h2>
+			<p class="dessert-price">$${price}</p>
+			<p class="product-category">Category: ${category}</p>
+			<button id="${id}" class="btn add-to-cart-btn">Add to cart</button>
+		</div>
+	`;
+});
