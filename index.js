@@ -100,3 +100,6 @@ products.forEach(({ name, id, price, category }) => {
 		</div>
 	`;
 });
+
+// Shopping Cart Class
+class ShoppingCart {}
