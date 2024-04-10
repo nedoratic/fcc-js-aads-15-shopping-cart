@@ -102,4 +102,10 @@ products.forEach(({ name, id, price, category }) => {
 });
 
 // Shopping Cart Class
-class ShoppingCart {}
+class ShoppingCart {
+	constructor() {
+		this.items = [];
+		this.total = 0;
+		this.taxRate = 8.25;
+	}
+}
