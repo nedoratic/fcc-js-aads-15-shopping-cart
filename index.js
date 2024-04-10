@@ -132,3 +132,6 @@ class ShoppingCart {
 			`);
 	}
 }
+
+// Cart Variable
+const cart = new ShoppingCart();
