@@ -135,3 +135,6 @@ class ShoppingCart {
 
 // Cart Variable
 const cart = new ShoppingCart();
+
+// Add to Cart Buttons
+const addToCartBtns = document.getElementsByClassName('add-to-cart-btn');
