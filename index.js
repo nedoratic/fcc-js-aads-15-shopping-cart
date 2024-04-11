@@ -131,6 +131,10 @@ class ShoppingCart {
 				</div>
 			`);
 	}
+
+	getCounts() {
+		return this.items.length;
+	}
 }
 
 // Cart Variable
