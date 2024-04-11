@@ -135,6 +135,10 @@ class ShoppingCart {
 	getCounts() {
 		return this.items.length;
 	}
+
+	calculateTaxes(amount) {
+		return parseFloat(((this.taxRate / 100) * amount).toFixed(2));
+	}
 }
 
 // Cart Variable
