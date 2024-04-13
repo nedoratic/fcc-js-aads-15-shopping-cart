@@ -92,13 +92,13 @@ const products = [
 // Render Products to DOM
 products.forEach(({ name, id, price, category }) => {
 	dessertCards.innerHTML += `
-		<div class="dessert-card">
-			<h2>${name}</h2>
-			<p class="dessert-price">$${price}</p>
-			<p class="product-category">Category: ${category}</p>
-			<button id="${id}" class="btn add-to-cart-btn">Add to cart</button>
-		</div>
-	`;
+        <div class="dessert-card">
+            <h2>${name}</h2>
+            <p class="dessert-price">$${price}</p>
+            <p class="product-category">Category: ${category}</p>
+            <button id="${id}" class="btn add-to-cart-btn">Add to cart</button>
+        </div>
+    `;
 });
 
 // Shopping Cart Class
@@ -125,11 +125,13 @@ class ShoppingCart {
 		currentProductCount > 1
 			? (currentProductCountSpan.textContent = `${currentProductCount}x`)
 			: (productsContainer.innerHTML += `
-				<div id="dessert${id}" class="product">
-					<p><span class="product-count" id="product-count-for-id${id}"></span>${name}</p>
-					<p>${price}</p>
-				</div>
-			`);
+                <div id="dessert${id}" class="product">
+                    <p><span class="product-count" id="product-count-for-id${id}"></span>${name}</p>
+                    <p>${price}</p>
+                </div>
+            `);
+
+		this.updateCartSummary();
 	}
 
 	getCounts() {
@@ -148,10 +150,7 @@ class ShoppingCart {
 			this.items = [];
 			this.total = 0;
 			productsContainer.innerHTML = '';
-			totalNumberOfItems.textContent = 0;
-			cartSubTotal.textContent = 0;
-			cartTaxes.textContent = 0;
-			cartTotal.textContent = 0;
+			this.updateCartSummary(); // Update cart summary after clearing cart
 		}
 	}
 
@@ -160,13 +159,23 @@ class ShoppingCart {
 	}
 
 	calculateTotal() {
-		const subTotal = this.items.reduce((total, item) => total + item.price, 0);
-		const tax = this.calculateTaxes(subTotal);
-		this.total = subTotal + tax;
-		cartSubTotal.textContent = `$${subTotal.toFixed(2)}`;
-		cartTaxes.textContent = `$${tax.toFixed(2)}`;
-		cartTotal.textContent = `$${this.total.toFixed(2)}`;
-		return this.total;
+		return this.items.reduce((total, item) => total + item.price, 0);
+	}
+
+	updateCartSummary() {
+		totalNumberOfItems.textContent = this.getCounts();
+		const totalAmount = this.calculateTotal();
+		if (totalAmount !== 0) {
+			const tax = this.calculateTaxes(totalAmount);
+			const subTotal = totalAmount - tax;
+			cartSubTotal.textContent = `$${subTotal.toFixed(2)}`;
+			cartTaxes.textContent = `$${tax.toFixed(2)}`;
+			cartTotal.textContent = `$${totalAmount.toFixed(2)}`;
+		} else {
+			cartSubTotal.textContent = '$0.00';
+			cartTaxes.textContent = '$0.00';
+			cartTotal.textContent = '$0.00';
+		}
 	}
 }
 
@@ -180,7 +189,6 @@ const addToCartBtns = document.getElementsByClassName('add-to-cart-btn');
 [...addToCartBtns].forEach((btn) => {
 	btn.addEventListener('click', (event) => {
 		cart.addItem(Number(event.target.id), products);
-		totalNumberOfItems.textContent = cart.getCounts();
 	});
 });
 
@@ -192,4 +200,6 @@ cartBtn.addEventListener('click', () => {
 });
 
 // Clear Cart Button Event Listener
-this.clearCartBtn.addEventListener('click', cart.clearCart.bind(cart));
+clearCartBtn.addEventListener('click', () => {
+	cart.clearCart();
+});
