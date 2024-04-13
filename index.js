@@ -190,3 +190,6 @@ cartBtn.addEventListener('click', () => {
 	showHideCartSpan.textContent = isCartShowing ? 'Hide' : 'Show';
 	cartContainer.style.display = isCartShowing ? 'block' : 'none';
 });
+
+// Clear Cart Button Event Listener
+this.clearCartBtn.addEventListener('click', cart.clearCart.bind(cart));
